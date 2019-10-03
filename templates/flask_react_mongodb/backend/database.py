@@ -11,5 +11,9 @@ client = pymongo.MongoClient(
 )
 
 
+def test():
+    client.database_names()
+
+
 if __name__ == "__main__":
     print("Successfully connected to mongodb")
