@@ -41,6 +41,5 @@ inquirer.prompt(questions).then(answers => {
     generalSetup(answers.workdir);
     backendBuild(answers.backend);
     frontendBuild(answers.frontend);
-    dbBuild(answers.database);
-    console.log(JSON.stringify(answers));
+    dbBuild(answers.backend, answers.database);
 });

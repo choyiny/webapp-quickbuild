@@ -1,4 +1,4 @@
 node_modules
 tests
-templates
 .DS_Store
+venv
