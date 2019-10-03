@@ -12,7 +12,9 @@ Webapp-Quickbuild is a tool that can easily setup the web application using exis
 Run `node cli.js` to get started.
 
 ## Backend
-If you are using `flask` framework as the backend, please use `virtualenv backend/venv/bin/activate` to activate the virtual environment first, then use `python backend/app.py` to start the app, it will be running on [localhost:5000](localhost:5000) by default.
+If you are using `flask` framework as the backend, please use `virtualenv backend/venv/bin/activate` to activate the virtual environment first, then use `python backend/app.py` to start the app, it will be running on [localhost:5000](http://localhost:5000) by default.
+
+If you are using `express` framework, simply run `npm start` to start the webapp, or `npm start:debug` to start it in debug mode.
 
 ## Database
 Docker is required in order to build databases since we are using images instead of actually downloading them. Please remember to stop the container using `docker stop webapp_database` and it will be removed automatically after being stopped. The name of the database container will always be `webapp_database` by default. The script to start the database will also be added to the root of the project, to start the database again just use `./startdb.sh` in your project.
@@ -23,9 +25,9 @@ Docker is required in order to build databases since we are using images instead
 There are some templates available in the templates folder, it shows how the whole project will look like after build.
 
 # TODO
-- [ ] mongodb
+- [x] mongodb
 - [ ] mysql
 - [ ] postgresql
-- [ ] express
+- [x] express
 - [ ] configurations
 - [ ] tests
