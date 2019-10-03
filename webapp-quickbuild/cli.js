@@ -40,6 +40,6 @@ var questions = [
 inquirer.prompt(questions).then(answers => {
     generalSetup(answers.workdir);
     backendBuild(answers.backend);
-    frontendBuild(answers.frontend);
+    frontendBuild(answers.backend, answers.frontend);
     dbBuild(answers.backend, answers.database);
 });

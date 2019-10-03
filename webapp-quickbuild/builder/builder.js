@@ -10,6 +10,7 @@ const starters = {
     'webpack': path.resolve(__dirname, 'starter', 'webpack'),
     'database': path.resolve(__dirname, 'starter', 'database'),
     'scripts': path.resolve(__dirname, 'starter', 'scripts'),
+    'express': path.resolve(__dirname, 'starter', 'express'),
 }
 
 function general(workdir) {
@@ -41,15 +42,29 @@ function backend(backend) {
         fs.copyFileSync(path.resolve(starters.html, 'html_starter.html'),
             path.join(backendDir, 'templates', 'index.html'));
     }
+    else if(backend === 'express') {
+        console.log('\nCreating backend files for express...\n');
+        fs.mkdirSync(path.join(backendDir, 'static'));
+        fs.copyFileSync(path.resolve(starters.express, 'express.starter.js'),
+            path.join(backendDir, 'index.js'));
+        fs.copyFileSync(path.resolve(starters.html, 'html_express_starter.html'),
+            path.join(backendDir, 'static', 'index.html'));
+    }
 }
 
-function frontend(frontend) {
+function frontend(backend, frontend) {
     if(frontend === 'react') {
         console.log('\nCreating frontend files for react...\n');
         fs.mkdirSync(path.join(frontendDir, 'js'));
         fs.mkdirSync(path.join(frontendDir, 'css'));
-        fs.copyFileSync(path.resolve(starters.react, 'react.starter.json'),
-            path.join(frontendDir, 'package.json'));
+        if(backend === 'express') {
+            fs.copyFileSync(path.resolve(starters.react, 'react.express.starter.json'),
+                path.join(workDir, 'package.json'));
+        }
+        else {
+            fs.copyFileSync(path.resolve(starters.react, 'react.starter.json'),
+                path.join(frontendDir, 'package.json'));
+        }
         fs.copyFileSync(path.resolve(starters.react, 'react.starter.jsx'),
             path.join(frontendDir, 'js', 'index.jsx'));
         fs.copyFileSync(path.resolve(starters.react, 'react.app.starter.jsx'),
@@ -63,9 +78,10 @@ function frontend(frontend) {
         fs.copyFileSync(path.resolve(starters.webpack, 'webpack.prod.starter.js'),
             path.join(frontendDir, 'webpack.prod.js'));
         console.log('\nInstalling dependencies for react...\n');
-        child_process.execSync(`cd ${frontendDir} && npm install`);
+        const pkgDir = backend === 'express'? workDir : frontendDir;
+        child_process.execSync(`cd ${pkgDir} && npm install`);
         console.log('\nBuilding react app...\n');
-        child_process.execSync(`cd ${frontendDir} && npm run build`);
+        child_process.execSync(`cd ${pkgDir} && npm run build`);
     }
 }
 
@@ -77,6 +93,15 @@ function database(backend, database) {
             console.log('\nCreating database files...\n');
             fs.copyFileSync(path.resolve(starters.database, 'database_starter.py'),
                 path.join(backendDir, 'database.py'));
+            fs.copyFileSync(path.resolve(starters.scripts, 'startdb.sh'),
+                path.join(workDir, 'startdb.sh'));
+        }
+        else if(backend === 'express') {
+            console.log('\nCreating database using docker...\n');
+            child_process.execSync(`${__dirname}/mongodb.sh`, {stdio: 'inherit'});
+            console.log('\nCreating database files...\n');
+            fs.copyFileSync(path.resolve(starters.database, 'database_starter.js'),
+                path.join(backendDir, 'database.js'));
             fs.copyFileSync(path.resolve(starters.scripts, 'startdb.sh'),
                 path.join(workDir, 'startdb.sh'));
         }
