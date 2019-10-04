@@ -1,6 +1,6 @@
 import mysql.connector as connector
 
-# docker run --rm --name webapp_database -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password mysql --default-authentication-plugin=mysql_native_password
+
 connection = connector.connect(
     host='localhost',
     port=3306,
