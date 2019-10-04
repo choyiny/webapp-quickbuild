@@ -91,7 +91,7 @@ function database(backend, database) {
             console.log('\nCreating database using docker...\n');
             child_process.execSync(`${__dirname}/mongodb.sh`, {stdio: 'inherit'});
             console.log('\nCreating database files...\n');
-            fs.copyFileSync(path.resolve(starters.database, 'database_starter.py'),
+            fs.copyFileSync(path.resolve(starters.database, 'mongo_starter.py'),
                 path.join(backendDir, 'database.py'));
             fs.copyFileSync(path.resolve(starters.scripts, 'startdb.sh'),
                 path.join(workDir, 'startdb.sh'));
@@ -100,7 +100,7 @@ function database(backend, database) {
             console.log('\nCreating database using docker...\n');
             child_process.execSync(`${__dirname}/mongodb.sh`, {stdio: 'inherit'});
             console.log('\nCreating database files...\n');
-            fs.copyFileSync(path.resolve(starters.database, 'database_starter.js'),
+            fs.copyFileSync(path.resolve(starters.database, 'mongo_starter.js'),
                 path.join(backendDir, 'database.js'));
             fs.copyFileSync(path.resolve(starters.scripts, 'startdb.sh'),
                 path.join(workDir, 'startdb.sh'));
