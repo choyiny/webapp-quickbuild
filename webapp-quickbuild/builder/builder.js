@@ -89,11 +89,11 @@ function database(backend, database) {
     if(database === 'MongoDB') {
         if(backend === 'flask') {
             console.log('\nCreating database using docker...\n');
-            child_process.execSync(`${__dirname}/mongodb.sh`, {stdio: 'inherit'});
+            child_process.execSync(`${__dirname}/starter/scripts/startdb.mongo.sh`, {stdio: 'inherit'});
             console.log('\nCreating database files...\n');
             fs.copyFileSync(path.resolve(starters.database, 'mongo_starter.py'),
                 path.join(backendDir, 'database.py'));
-            fs.copyFileSync(path.resolve(starters.scripts, 'startdb.sh'),
+            fs.copyFileSync(path.resolve(starters.scripts, 'startdb.mongo.sh'),
                 path.join(workDir, 'startdb.sh'));
         }
         else if(backend === 'express') {
@@ -102,7 +102,18 @@ function database(backend, database) {
             console.log('\nCreating database files...\n');
             fs.copyFileSync(path.resolve(starters.database, 'mongo_starter.js'),
                 path.join(backendDir, 'database.js'));
-            fs.copyFileSync(path.resolve(starters.scripts, 'startdb.sh'),
+            fs.copyFileSync(path.resolve(starters.scripts, 'startdb.mongo.sh'),
+                path.join(workDir, 'startdb.sh'));
+        }
+    }
+    else if(database === 'MySQL') {
+        if(backend === 'flask') {
+            console.log('\nCreating database using docker...\n');
+            child_process.execSync(`${__dirname}/starter/scripts/startdb.mysql.sh`, {stdio: 'inherit'});
+            console.log('\nCreating database files...\n');
+            fs.copyFileSync(path.resolve(starters.database, 'mysql_starter.py'),
+                path.join(backendDir, 'database.py'));
+            fs.copyFileSync(path.resolve(starters.scripts, 'startdb.mysql.sh'),
                 path.join(workDir, 'startdb.sh'));
         }
     }
